@@ -1,0 +1,349 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RetireHappyDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AvgExpenditure">
+          <Key>
+            <PropertyRef Name="eId" />
+          </Key>
+          <Property Name="eId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="category" Type="varchar" MaxLength="255" />
+          <Property Name="type" Type="varchar" MaxLength="255" />
+          <Property Name="recordYear" Type="datetime" />
+          <Property Name="avgAmount" Type="float" />
+        </EntityType>
+        <EntityType Name="ExpenditureList">
+          <Key>
+            <PropertyRef Name="mId" />
+          </Key>
+          <Property Name="mId" Type="int" Nullable="false" />
+          <Property Name="item1" Type="varchar" MaxLength="255" />
+          <Property Name="item2" Type="varchar" MaxLength="255" />
+          <Property Name="item3" Type="varchar" MaxLength="255" />
+          <Property Name="item4" Type="varchar" MaxLength="255" />
+          <Property Name="item5" Type="varchar" MaxLength="255" />
+          <Property Name="item6" Type="varchar" MaxLength="255" />
+          <Property Name="item7" Type="varchar" MaxLength="255" />
+          <Property Name="item8" Type="varchar" MaxLength="255" />
+          <Property Name="item9" Type="varchar" MaxLength="255" />
+          <Property Name="item10" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="mId" />
+          </Key>
+          <Property Name="mId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="255" />
+          <Property Name="userName" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="SavingsInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="calcRetSavings" Type="float" />
+          <Property Name="riskLevel" Type="char" MaxLength="255" />
+          <Property Name="expPercent" Type="float" />
+          <Property Name="diffPercent" Type="float" />
+        </EntityType>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mId" Type="int" />
+          <Property Name="age" Type="int" />
+          <Property Name="gender" Type="char" MaxLength="255" />
+          <Property Name="expRetAge" Type="int" />
+          <Property Name="retDuration" Type="int" />
+          <Property Name="monIncome" Type="float" />
+          <Property Name="avgMonExpenditure" Type="float" />
+          <Property Name="curSavingAmt" Type="float" />
+          <Property Name="desiredMonRetInc" Type="float" />
+          <Property Name="timestamp" Type="datetime" />
+          <Property Name="inflationRate" Type="float" />
+          <Property Name="ifUseAvgExp" Type="char" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK__Expenditure__mId__6EF57B66">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="ExpenditureList" Type="Self.ExpenditureList" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="mId" />
+            </Principal>
+            <Dependent Role="ExpenditureList">
+              <PropertyRef Name="mId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SavingsInfo__Id__693CA210">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
+          <End Role="SavingsInfo" Type="Self.SavingsInfo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SavingsInfo">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserProfile__mId__6A30C649">
+          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="mId" />
+            </Principal>
+            <Dependent Role="UserProfile">
+              <PropertyRef Name="mId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RetireHappyDBModelStoreContainer">
+          <EntitySet Name="AvgExpenditure" EntityType="Self.AvgExpenditure" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExpenditureList" EntityType="Self.ExpenditureList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Member" EntityType="Self.Member" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SavingsInfo" EntityType="Self.SavingsInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Expenditure__mId__6EF57B66" Association="Self.FK__Expenditure__mId__6EF57B66">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="ExpenditureList" EntitySet="ExpenditureList" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SavingsInfo__Id__693CA210" Association="Self.FK__SavingsInfo__Id__693CA210">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="SavingsInfo" EntitySet="SavingsInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserProfile__mId__6A30C649" Association="Self.FK__UserProfile__mId__6A30C649">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="UserProfile" EntitySet="UserProfile" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RetireHappyDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AvgExpenditure">
+          <Key>
+            <PropertyRef Name="eId" />
+          </Key>
+          <Property Name="eId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="category" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="type" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="recordYear" Type="DateTime" Precision="3" />
+          <Property Name="avgAmount" Type="Double" />
+        </EntityType>
+        <EntityType Name="ExpenditureList">
+          <Key>
+            <PropertyRef Name="mId" />
+          </Key>
+          <Property Name="mId" Type="Int32" Nullable="false" />
+          <Property Name="item1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="item2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="item3" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="item4" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="item5" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="item6" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="item7" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="item8" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="item9" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="item10" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Member" Relationship="Self.FK__Expenditure__mId__6EF57B66" FromRole="ExpenditureList" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="mId" />
+          </Key>
+          <Property Name="mId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="userName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ExpenditureList" Relationship="Self.FK__Expenditure__mId__6EF57B66" FromRole="Member" ToRole="ExpenditureList" />
+          <NavigationProperty Name="UserProfiles" Relationship="Self.FK__UserProfile__mId__6A30C649" FromRole="Member" ToRole="UserProfile" />
+        </EntityType>
+        <EntityType Name="SavingsInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="calcRetSavings" Type="Double" />
+          <Property Name="riskLevel" Type="String" MaxLength="255" FixedLength="true" Unicode="false" />
+          <Property Name="expPercent" Type="Double" />
+          <Property Name="diffPercent" Type="Double" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.FK__SavingsInfo__Id__693CA210" FromRole="SavingsInfo" ToRole="UserProfile" />
+        </EntityType>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mId" Type="Int32" />
+          <Property Name="age" Type="Int32" />
+          <Property Name="gender" Type="String" MaxLength="255" FixedLength="true" Unicode="false" />
+          <Property Name="expRetAge" Type="Int32" />
+          <Property Name="retDuration" Type="Int32" />
+          <Property Name="monIncome" Type="Double" />
+          <Property Name="avgMonExpenditure" Type="Double" />
+          <Property Name="curSavingAmt" Type="Double" />
+          <Property Name="desiredMonRetInc" Type="Double" />
+          <Property Name="timestamp" Type="DateTime" Precision="3" />
+          <Property Name="inflationRate" Type="Double" />
+          <Property Name="ifUseAvgExp" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Member" Relationship="Self.FK__UserProfile__mId__6A30C649" FromRole="UserProfile" ToRole="Member" />
+          <NavigationProperty Name="SavingsInfo" Relationship="Self.FK__SavingsInfo__Id__693CA210" FromRole="UserProfile" ToRole="SavingsInfo" />
+        </EntityType>
+        <Association Name="FK__Expenditure__mId__6EF57B66">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="ExpenditureList" Type="Self.ExpenditureList" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="mId" />
+            </Principal>
+            <Dependent Role="ExpenditureList">
+              <PropertyRef Name="mId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserProfile__mId__6A30C649">
+          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="mId" />
+            </Principal>
+            <Dependent Role="UserProfile">
+              <PropertyRef Name="mId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SavingsInfo__Id__693CA210">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
+          <End Role="SavingsInfo" Type="Self.SavingsInfo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SavingsInfo">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RetireHappyDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AvgExpenditures" EntityType="Self.AvgExpenditure" />
+          <EntitySet Name="ExpenditureLists" EntityType="Self.ExpenditureList" />
+          <EntitySet Name="Members" EntityType="Self.Member" />
+          <EntitySet Name="SavingsInfoes" EntityType="Self.SavingsInfo" />
+          <EntitySet Name="UserProfiles" EntityType="Self.UserProfile" />
+          <AssociationSet Name="FK__Expenditure__mId__6EF57B66" Association="Self.FK__Expenditure__mId__6EF57B66">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="ExpenditureList" EntitySet="ExpenditureLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserProfile__mId__6A30C649" Association="Self.FK__UserProfile__mId__6A30C649">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SavingsInfo__Id__693CA210" Association="Self.FK__SavingsInfo__Id__693CA210">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="SavingsInfo" EntitySet="SavingsInfoes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RetireHappyDBModelStoreContainer" CdmEntityContainer="RetireHappyDBEntities">
+          <EntitySetMapping Name="AvgExpenditures">
+            <EntityTypeMapping TypeName="RetireHappyDBModel.AvgExpenditure">
+              <MappingFragment StoreEntitySet="AvgExpenditure">
+                <ScalarProperty Name="eId" ColumnName="eId" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="recordYear" ColumnName="recordYear" />
+                <ScalarProperty Name="avgAmount" ColumnName="avgAmount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExpenditureLists">
+            <EntityTypeMapping TypeName="RetireHappyDBModel.ExpenditureList">
+              <MappingFragment StoreEntitySet="ExpenditureList">
+                <ScalarProperty Name="mId" ColumnName="mId" />
+                <ScalarProperty Name="item1" ColumnName="item1" />
+                <ScalarProperty Name="item2" ColumnName="item2" />
+                <ScalarProperty Name="item3" ColumnName="item3" />
+                <ScalarProperty Name="item4" ColumnName="item4" />
+                <ScalarProperty Name="item5" ColumnName="item5" />
+                <ScalarProperty Name="item6" ColumnName="item6" />
+                <ScalarProperty Name="item7" ColumnName="item7" />
+                <ScalarProperty Name="item8" ColumnName="item8" />
+                <ScalarProperty Name="item9" ColumnName="item9" />
+                <ScalarProperty Name="item10" ColumnName="item10" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Members">
+            <EntityTypeMapping TypeName="RetireHappyDBModel.Member">
+              <MappingFragment StoreEntitySet="Member">
+                <ScalarProperty Name="mId" ColumnName="mId" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SavingsInfoes">
+            <EntityTypeMapping TypeName="RetireHappyDBModel.SavingsInfo">
+              <MappingFragment StoreEntitySet="SavingsInfo">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="calcRetSavings" ColumnName="calcRetSavings" />
+                <ScalarProperty Name="riskLevel" ColumnName="riskLevel" />
+                <ScalarProperty Name="expPercent" ColumnName="expPercent" />
+                <ScalarProperty Name="diffPercent" ColumnName="diffPercent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserProfiles">
+            <EntityTypeMapping TypeName="RetireHappyDBModel.UserProfile">
+              <MappingFragment StoreEntitySet="UserProfile">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="mId" ColumnName="mId" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="expRetAge" ColumnName="expRetAge" />
+                <ScalarProperty Name="retDuration" ColumnName="retDuration" />
+                <ScalarProperty Name="monIncome" ColumnName="monIncome" />
+                <ScalarProperty Name="avgMonExpenditure" ColumnName="avgMonExpenditure" />
+                <ScalarProperty Name="curSavingAmt" ColumnName="curSavingAmt" />
+                <ScalarProperty Name="desiredMonRetInc" ColumnName="desiredMonRetInc" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="inflationRate" ColumnName="inflationRate" />
+                <ScalarProperty Name="ifUseAvgExp" ColumnName="ifUseAvgExp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

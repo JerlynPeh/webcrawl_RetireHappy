@@ -1,0 +1,74 @@
+﻿@model IEnumerable<RetireHappy.Models.AvgExpenditure>
+
+@{
+    ViewBag.Title = "Add Expenditures";
+}
+
+<div style="float:right">
+    
+    <button type="button" class="btn btn-link " data-toggle="collapse" data-target="#selectList"> 
+        <div id="NumItems">View Selected(0)</div>
+    </button>
+
+    <div id="selectList" class="collapse">
+        <ul id="expList" style="font-size:10px"></ul>
+    </div>
+    <div>
+        Total Amount: $<div id="totalAmt">00.00</div>
+    </div>
+    <br>
+        @using (Html.BeginForm("CalculatorStep3", "Users", FormMethod.Get))
+        {
+            <button class="btn btn-outline btn-info btn-sm"  data-request-url="@Url.Action("Tabulate", "Expenditure")" style="float:right" type="submit" id="Done" disabled>Done</button>
+        }
+</div>
+<h2>Add Expenditures</h2>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="/Scripts/expenditure.js"></script>
+
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString")
+        <button type="submit" class="btn btn-default" value="Search">Search</button>
+    </p>
+}
+
+<table class="table" style="height:80px;overflow:auto;">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.avgAmount)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.avgAmount)
+            </td>
+            <td>
+                <button class="btn btn-outline btn-default" id="AddBtn_@Html.Raw(item.eId)" value="@Html.Raw(item.eId)-@Html.Raw(item.type)-@Html.Raw(item.avgAmount)">Add</button>
+                <button class="btn btn-outline btn-info " id="RemBtn_@Html.Raw(item.eId)" value="@Html.Raw(item.eId)-@Html.Raw(item.type)-@Html.Raw(item.avgAmount)" style="display:none;">Remove</button>
+            </td>
+
+        </tr>
+    }
+
+</table>
+<!-- Modal -->
